@@ -1,13 +1,13 @@
-import java.util.concurrent.*;
+public class demo implements Runnable {
 
-public class demo {
+    public static void main(String[] args) {
+        new Thread(new demo()).start();// 第一个线程
+        new Thread(new demo()).start();// 第二个线程
+    }
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-        Callable<String> callable = () -> "hello thread!";
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        Future<String> future = executorService.submit(callable);
-        System.out.println(future.get());
-        executorService.shutdown();
+    @Override
+    public void run() {
+        System.out.println("当前线程：" + Thread.currentThread().getName());
     }
 
 }
