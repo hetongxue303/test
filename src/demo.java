@@ -1,5 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -8,17 +10,31 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class demo {
 
-    public static void main(String[] args) {
-        Cache cache = new Cache();
-        for (int i = 0; i <= 5; i++) {
-            int finalI = i;
-            new Thread(() -> cache.put(String.valueOf(finalI), finalI), String.valueOf(i)).start();
-        }
-        for (int i = 0; i <= 5; i++) {
-            int finalI = i;
-            new Thread(() -> cache.get(String.valueOf(finalI)), String.valueOf(i)).start();
-        }
+    public static void main(String[] args) throws InterruptedException {
 
+        SynchronousQueue<Integer> synchronousQueue = new SynchronousQueue<>();
+        new Thread(() -> {
+            System.out.println(Thread.currentThread().getName());
+            try {
+                synchronousQueue.put(1);
+                synchronousQueue.put(2);
+                synchronousQueue.put(3);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }, "A").start();
+        new Thread(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(2);
+                System.out.println(Thread.currentThread().getName());
+                System.out.println(synchronousQueue.take());
+                System.out.println(synchronousQueue.take());
+                System.out.println(synchronousQueue.take());
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+        }, "B").start();
     }
 
 }
