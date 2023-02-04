@@ -8,7 +8,9 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     public String val;
+    @Anno(AnnoEnum.FAILED)
     private Integer id;
+    @Anno
     private String name;
     private Integer age;
     private Boolean isDelete;
@@ -25,6 +27,10 @@ public class User implements Serializable {
         this.name = name;
         this.age = age;
         this.isDelete = isDelete;
+    }
+
+    void pri() {
+        System.out.println(name);
     }
 
     public String getVal() {
