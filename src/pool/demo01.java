@@ -17,16 +17,16 @@ public class demo01 {
         for (Annotation annotation : annotations) {
             System.out.println(annotation);
         }
-//        Anno anno = User.class.getAnnotation(Anno.class);
-//        AnnoEnum value = anno.value();
-//        if (value == AnnoEnum.OK) {
-//            System.out.println("ok");
-//        } else if (value == AnnoEnum.FAILED) {
-//            System.out.println("failed");
-//        } else {
-//            System.out.println("error");
-//        }
-//        System.out.println(anno.value());
+        Anno anno = User.class.getAnnotation(Anno.class);
+        AnnoEnum value = anno.value();
+        if (value == AnnoEnum.OK) {
+            System.out.println("ok");
+        } else if (value == AnnoEnum.FAILED) {
+            System.out.println("failed");
+        } else {
+            System.out.println("error");
+        }
+        System.out.println(anno.value());
         Anno id = User.class.getDeclaredField("id").getAnnotation(Anno.class);
         Anno name = User.class.getDeclaredField("name").getAnnotation(Anno.class);
         System.out.println(id.value());
